@@ -16,6 +16,7 @@ The `read()` method has a few optional arguments that can be used to control its
 - `sortfield` can be set to any of the keys listed above. The default is `date`. 
 - `ascending` controls sort order of the returned list. The default is `True`; set to `False` for descending sort.
 - `dateformat` controls the formatting of the `date`, `added`, and `viewed` fields. Defaults to `None`, in which case datetime objects are returned instead of strings. Understands [strftime format directives](http://docs.python.org/library/datetime.html?highlight=strftime#strftime-strptime-behavior).
+- `syncdate` controls the earliest Reading List item to sync with Instapaper. Default to `None`, format is YYYY-MM-DD.
 
 Your Reading List is read once by the `ReadingListReader` constructor. Subsequent calls to the `read()` method do not reload the Reading List, but can be called with different options to return different subsets of the same list.
 
@@ -48,6 +49,7 @@ This script is derived from [Safari-Reading-List-Recipe](https://github.com/anov
 								[--show FILTER] [--sortfield FIELD]
 								[--sortorder ORDER] [--output OUTPUT]
 								[--input INPUT]
+								[--syncdate YYYY-MM-DD]
 	
 	This script outputs the contents of your Safari Reading List, a queue of
 	temporary bookmarks representing articles you intend to read. By default, it
@@ -82,6 +84,8 @@ This script is derived from [Safari-Reading-List-Recipe](https://github.com/anov
 	  --input INPUT         Input file path. Assumed to be a Safari bookmarks file
 							formatted as a binary property list. Defaults to
 							~/Library/Safari/Bookmarks.plist
+	  --syncdate YYYY-MM-DD	Controls the earliest Reading List item to sync with Instapaper.
+				Default to `None`, format is YYYY-MM-DD.
 
 ### Installation
 
