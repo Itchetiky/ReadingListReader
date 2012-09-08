@@ -16,6 +16,7 @@ ap = argparse.ArgumentParser(description='This script adds your Safari Reading L
 ap.add_argument('-u', '--username', action='store', default='', help='Instapaper username or email.')
 ap.add_argument('-p', '--password', action='store', default='', help='Instapaper password (if any).')
 ap.add_argument('-v', '--verbose', action='store_true', help='Print article URLs as they are added.')
+ap.add_argument('--syncdate', action='store', default='2012-09-01', help='Sync links on or after a desired date. Defaults to 1970-01-01')
 args = ap.parse_args()
 
 if '' == args.username:
@@ -50,11 +51,13 @@ if 200 != auth_status:
 
 # Get the Reading List items
 rlr = ReadingListReader()
-articles = rlr.read()
+articles = rlr.read(
+		show = all,
+		syncdate = args.syncdate)
 
 for article in articles:
 
-	(add_status, add_message) = instapaper.add_item(article['url'].encode('utf-8'), title=article['title'].encode('utf-8'))
+	(add_status, add_message) = instapaper.add_item(article['url'].encode('utf-8'), title=article['title'].encode('utf-8'), selection=article['preview'].encode('utf-8'))
 	
 	# 201: Added
 	# 400: Rejected (malformed request or exceeded rate limit; probably missing a parameter)
