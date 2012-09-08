@@ -95,13 +95,6 @@ class ReadingListReader:
 		if None != dateformat:
 			articles = map(self.formatDates, articles, [dateformat for i in range(len(articles))])
 
-		# Debugging - Print's the contents of the 'articles' list.
-		for index, item in enumerate(articles):	
-					#print index, item	
-					#print
-					#date = item['date']
-					print 'Date last fetched = %s		Date added = %s 		synckey = %s' % (item['date'],item['added'], item['synckey'])
-
 		return articles
 	
 	def resetUndefinedDates(self, article):
