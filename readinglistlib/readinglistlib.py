@@ -64,14 +64,13 @@ class ReadingListReader:
 	# ascending determines sort order; if false, sort is descending order
 	# dateformat is used to format dates; if None, datetime objects are returned
 	def read(self, show='all', sortfield='date', ascending=True, dateformat=None, syncdate=None):
-			
+
 		# Filter, sort, and return a fresh copy of the internal article list
 		articles = deepcopy(self._articles)
 
 		# Filter article list to only send the 'later than' arcticles
 		if None != syncdate:
-			syncdate = datetime.datetime.strptime(syncdate, '%Y-%m-%d')
-			print 'Sync from date of:', syncdate
+			syncdate = parse(syncdate)
 			articles = filter(lambda record: syncdate <= record['added'] or syncdate <= record['date'], articles)
 
 		# Filter article list to show only unread or read articles, if requested		
@@ -94,6 +93,13 @@ class ReadingListReader:
 		# convert all defined dates to that format and undefined dates to ''.
 		if None != dateformat:
 			articles = map(self.formatDates, articles, [dateformat for i in range(len(articles))])
+
+		# Debugging - Print's the contents of the 'articles' list.
+		for index, item in enumerate(articles):	
+			#print index, item	
+			#print
+			#date = item['date']
+			print 'Date last fetched = %s		Date added = %s 		synckey = %s' % (item['date'],item['added'], item['synckey'])
 
 		return articles
 	

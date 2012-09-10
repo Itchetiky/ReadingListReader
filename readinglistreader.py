@@ -21,11 +21,8 @@ ap.add_argument('--sortfield', action='store', default='date', choices=fields, m
 ap.add_argument('--sortorder', action='store', default='ascending', choices=['ascending', 'descending'], metavar='ORDER', help='May be ascending or descending. Defaults to ascending.')
 ap.add_argument('--output', action='store', type=argparse.FileType('w'), default='-', help='Output file path. Defaults to stdout.')
 ap.add_argument('--input', action='store', default=os.path.expanduser('~/Library/Safari/Bookmarks.plist'), help='Input file path. Assumed to be a Safari bookmarks file formatted as a binary property list. Defaults to ~/Library/Safari/Bookmarks.plist')
-ap.add_argument('--syncdate', action='store', default=None, help='Sync links on or after a desired date. Defaults to 1970-01-01')
-#ap.add_argument('--syncdate', action='store', default='2012-08-01', help='Sync links on or after a desired date. Defaults to 1970-01-01')
+ap.add_argument('--syncdate', action='store', default=None, help='Sync links on or after a desired date. Defaults to 1970-01-01 00:00:00')
 args = ap.parse_args()
-
-print 'args.syncdate =', args.syncdate
 
 # Reinterpretation of fiddly options
 if 'tab' == args.separator:
