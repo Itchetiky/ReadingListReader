@@ -46,21 +46,19 @@ if None == args.syncdate:
 		lastsyncdateFile = open(os.path.expanduser('~/.readinglist2instapaper') + '/.lastsyncdate')
 		lastsyncdateFile.seek(0)
 		args.syncdate = lastsyncdateFile.readline()
-		print 'lastsyncdate:', args.syncdate
 	except IOError:
 		print 'File \'~/.readinglist2instapaper/.lastsyncdate\' not found. Using 1970-01-01 00:00:00 as synconize from date.'
 
 # Storing our current time for syncing later.
 # Doing it this way could mean a duplicate article is sync'ed, but I'd rather have a dup then loss an article.
 print 'Updating ~/.readinglist2instapaper/.lastsyncdate file.'
-print 'lastsyncdate before write:', args.syncdate
 lastsyncdate = parse(datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'))
 lastsyncdateFile = open(os.path.expanduser('~/.readinglist2instapaper') + '/.lastsyncdate', 'w+')
 lastsyncdateFile.write(str(lastsyncdate))
 # Paranoia..
 lastsyncdateFile.seek(0)
 lastsyncdate = lastsyncdateFile.readline()
-print 'Using %s as the next syncronized date.' % lastsyncdate
+print 'Using %s as the subsequent syncronized date.' % lastsyncdate
 
 # Log in to the Instapaper API.
 instapaper = Instapaper(args.username, args.password)
@@ -82,10 +80,6 @@ articles = rlr.read(
 for article in articles:
 
 	(add_status, add_message) = instapaper.add_item(article['url'].encode('utf-8'), title=article['title'].encode('utf-8'), selection=article['preview'].encode('utf-8'))
-	
-	# Debug junk
-	lastsyncdate = article['date']
-	print "Last syncdate is:", lastsyncdate
 	
 	# 201: Added
 	# 400: Rejected (malformed request or exceeded rate limit; probably missing a parameter)
